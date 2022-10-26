@@ -3,6 +3,6 @@ from rest_framework.response import Response
 # Create your views here.
 
 
-@api_view(['get'])
-def get_all_videos(request):
+@api_view(['GET'])
+def view_comments(request):
     return Response('hello')
