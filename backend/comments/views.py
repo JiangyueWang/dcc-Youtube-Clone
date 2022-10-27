@@ -1,6 +1,6 @@
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
 from comments.serializers import CommentSerializer
 from comments.models import Comment
@@ -26,9 +26,13 @@ def view_comments(request, videoId):
             param_type = request.query_params.get("type")
 
             if param_type == 'like':
-                video_info.like = video_info.like + 1
-                video_info.save()
-                serializer = CommentSerializer(video_info, many=True)
+                original_like_value = Comment._meta.get_field(
+                    "like").value_from_object(video_info)
+                print(original_like_value)
+                # video_info.like = video_info.like + 1
+                # video_info.save()
+                # serializer = CommentSerializer(video_info, many=True)
+                return Response('test')
                 return Response(serializer.data)
             else:
 
