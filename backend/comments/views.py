@@ -1,27 +1,44 @@
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.decorators import api_view, permission_classes
 from comments.serializers import CommentSerializer
 from comments.models import Comment
 # Create your views here.
 
 
-@api_view(['GET'])
+@api_view(['GET', 'PATCH'])
 def view_comments(request, videoId):
+    video_info = Comment.objects.filter(video_id=videoId)
     if request.method == 'GET':
         # allow any user to view all the comments for a video
         # e.g. url:http://127.0.0.1:8000/api/comments/W6NZfCO5SIk
         try:
-            comments = Comment.objects.filter(video_id=videoId)
-            serializer = CommentSerializer(comments, many=True)
+
+            serializer = CommentSerializer(video_info, many=True)
             return Response(serializer.data)
         except Comment.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
+    elif request.method == 'PATCH':
 
-@api_view(['GET', 'POST'])
-@permission_classes([IsAuthenticated])
+        if request.user.is_authenticated:
+            param_type = request.query_params.get("type")
+
+            if param_type == 'like':
+                video_info.like = video_info.like + 1
+                video_info.save()
+                serializer = CommentSerializer(video_info, many=True)
+                return Response(serializer.data)
+            else:
+
+                return Response('valid user')
+        else:
+            return Response('non valid user')
+
+
+@ api_view(['GET', 'POST'])
+@ permission_classes([IsAuthenticated])
 def post_comment(request):
 
     if request.method == 'POST':
