@@ -3,6 +3,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
+from comments.serializers import ReplySerializer
 from comments.serializers import CommentSerializer
 from comments.models import Comment
 # Create your views here.
@@ -59,3 +60,17 @@ def post_comment(request):
             return Response(serializers.data, status=status.HTTP_201_CREATED)
 
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@ api_view(['POST'])
+@ permission_classes([IsAuthenticated])
+def reply_comment(request, comment_id):
+    # allow registered user to reply a comment
+    # e.g. url:http://127.0.0.1:8000/api/comments/reply/6/
+    # check validation of the comment
+    comment = get_object_or_404(Comment, id=comment_id)
+    # if it is a valid comment, then save the reply to the Reply model
+    serializers = ReplySerializer(data=request.data)
+    if serializers.is_valid():
+        serializers.save(user=request.user, comment=comment)
+        return Response(serializers.data, status=status.HTTP_201_CREATED)

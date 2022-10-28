@@ -7,4 +7,6 @@ urlpatterns = [
     path('<str:videoId>/', views.view_comments),
     path('like/<int:comment_id>/', views.comment_like),
     path('dislike/<int:comment_id>/', views.comment_like),
+    path('reply/<int:comment_id>/', views.reply_comment),
+
 ]
