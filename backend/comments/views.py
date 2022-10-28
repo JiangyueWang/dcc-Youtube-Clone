@@ -6,6 +6,7 @@ from rest_framework.decorators import api_view, permission_classes
 from comments.serializers import ReplySerializer
 from comments.serializers import CommentSerializer
 from comments.models import Comment
+from comments.models import Reply
 # Create your views here.
 
 
@@ -74,3 +75,12 @@ def reply_comment(request, comment_id):
     if serializers.is_valid():
         serializers.save(user=request.user, comment=comment)
         return Response(serializers.data, status=status.HTTP_201_CREATED)
+
+
+@ api_view(['GET'])
+@ permission_classes([IsAuthenticated])
+def view_comment_replies(request, comment_id):
+    # allow registered user to view all the replies for a choosen comment
+    reply = Reply.objects.filter(comment__id=comment_id)
+    serializers = ReplySerializer(reply, many=True)
+    return Response(serializers.data)
