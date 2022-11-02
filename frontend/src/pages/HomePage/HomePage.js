@@ -5,6 +5,7 @@ import { KEY } from "../../localKey";
 import { DATA } from "../../localData";
 import axios from "axios";
 import InterestedTopicSearch from "../../components/InterestedTopicSearch/InterestedTopicSearch";
+import DisplayVideos from "../../components/DisplayVideos/DisplayVideos";
 
 const HomePage = () => {
   // The "user" value from this Hook contains the decoded logged in user information (username, first name, id)
@@ -14,9 +15,9 @@ const HomePage = () => {
 
 
   // state variable to capture all the videos fetched via Youtube API
-  const [videos, setVideos] = useState({});
-  // const [items, setItems] = useState(DATA.items);
-  // const [ids, setIds] = useState({});
+  // const [videos, setVideos] = useState({});
+  const [videos, setVideos] = useState(DATA);
+
   
  
   // state variable the stores user's interested topics
@@ -24,7 +25,7 @@ const HomePage = () => {
   // const getURL = `https://www.googleapis.com/youtube/v3/search?key=${KEY}&q=${interestedTopic}&maxResults=5&type=video&part=snippet`
 
   useEffect(() => {
-    fetchVideos(interestedTopic);
+    // fetchVideos(interestedTopic);
   }, [interestedTopic]);
 
   const getTopic = (topic) => {
@@ -33,7 +34,6 @@ const HomePage = () => {
 
   const fetchVideos = async (topic) => {
     const getURL = `https://www.googleapis.com/youtube/v3/search?key=${KEY}&q=${topic}&maxResults=5&type=video&part=snippet`
-    console.log(getURL)
     try {
       let response = await axios.get(`${getURL}`);
       setVideos(response.data)
@@ -41,19 +41,13 @@ const HomePage = () => {
       console.log(error.message)
     }
   }
-  console.log(videos)
-
-  // console.log(items)
-  // console.log(items.map((item) => {
-  //   return console.log(item.snippet.thumbnails.high.url)
-  // }))
-
 
 
   return (
     <div className="container">
       <h1>Home Page for {user.username}!</h1>
       <InterestedTopicSearch getTopic={getTopic}/>
+      <DisplayVideos videos={videos} />
     </div>
   );
 };
