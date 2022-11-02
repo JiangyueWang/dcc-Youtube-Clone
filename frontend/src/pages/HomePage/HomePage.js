@@ -15,39 +15,39 @@ const HomePage = () => {
 
 
   // state variable to capture all the videos fetched via Youtube API
-  // const [videos, setVideos] = useState({});
-  const [videos, setVideos] = useState(DATA);
-
-  
+  const [videos, setVideos] = useState({});
+  // const [videos, setVideos] = useState(DATA);
  
   // state variable the stores user's interested topics
   const [interestedTopic, setInteresedTopic] = useState('')
   // const getURL = `https://www.googleapis.com/youtube/v3/search?key=${KEY}&q=${interestedTopic}&maxResults=5&type=video&part=snippet`
 
   useEffect(() => {
-    // fetchVideos(interestedTopic);
-  }, [interestedTopic]);
+    interestedTopic&&fetchVideos(interestedTopic);
+  }, [interestedTopic])
 
   const getTopic = (topic) => {
-    setInteresedTopic(topic)
+    setInteresedTopic(topic);
   }
 
   const fetchVideos = async (topic) => {
     const getURL = `https://www.googleapis.com/youtube/v3/search?key=${KEY}&q=${topic}&maxResults=5&type=video&part=snippet`
     try {
       let response = await axios.get(`${getURL}`);
-      setVideos(response.data)
+      setVideos(response.data.items)
     } catch(error) {
       console.log(error.message)
     }
   }
 
-
+  console.log('videos',videos)
+  console.log('topic',interestedTopic)
+  
   return (
     <div className="container">
       <h1>Home Page for {user.username}!</h1>
       <InterestedTopicSearch getTopic={getTopic}/>
-      <DisplayVideos videos={videos} />
+      {videos && <DisplayVideos videos={videos} />}
     </div>
   );
 };
