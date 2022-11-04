@@ -4,28 +4,24 @@ import { KEY } from '../../localKey';
 import { DATA } from '../../localData';
 import DisplayVideos from '../DisplayVideos/DisplayVideos';
 const DisplayRelatedVideos = (props) => {
-    const [relatedVideos, setRelatedVideos] = useState(DATA.items);
+    console.log(props.videoId)
+    const getRelatedVideosURL = `https://www.googleapis.com/youtube/v3/search?key=${KEY}&type=video&relatedToVideoId=${props.videoId}&part=snippet&maxResults=5`
+    const [relatedVideos, setRelatedVideos] = useState();
+    useEffect(() => {
+        fetchRelatedVideo();
+    }, [])
+    const fetchRelatedVideo = async () => {
+        try {
+          let response = await axios.get(`${getRelatedVideosURL}`);
+          setRelatedVideos(response.data.items)
+        } catch(error) {
+          console.log(error.message)
+        }
+    }
 
-    // const fetchRelatedVideo = async () => {
-    //     const getURL = `https://www.googleapis.com/youtube/v3/search?key=${KEY}&q=${props.videoId}&maxResults=5&type=video&part=snippet`
-    //     try {
-    //       let response = await axios.get(`${getURL}`);
-    //       setRelatedVideos(response.data.items)
-    //     } catch(error) {
-    //       console.log(error.message)
-    //     }
-    // }
-    console.log(relatedVideos)
-    // fetchRelatedVideo();
     return (  
         <div>
-            <p>div inside the DisplayRelatedVideos {props.videoId}</p>
-            <DisplayRelatedVideos viodes={relatedVideos} />
-            {/* <div>{
-                relatedVideos.map((item) => {
-                    return console.log(item)
-                })
-            }</div> */}
+            {relatedVideos &&<DisplayVideos videos={relatedVideos} />}
         </div>
     );
 }

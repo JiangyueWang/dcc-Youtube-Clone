@@ -1,26 +1,12 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import DisplayRelatedVideos from '../../components/DisplayRelatedVideos/DisplayRelatedVideos';
 import { useParams } from 'react-router-dom';
-import { KEY } from '../../localKey';
+
+
 const VideoPage = (props) => {
     const { videoId } = useParams();
-    const [video, setVideo] = useState({});
-    
-    useEffect(() => {
-        fetchVideo();
-    },[videoId])
-    const fetchVideo = async () => {
-        const videoUrl = `https://www.googleapis.com/youtube/v3/videos?key=${KEY}&part=snippet&id=${videoId}}`
-        console.log(videoUrl)
-        try {
-            let response = await axios.get(`${videoUrl}`);
-            console.log(response.data)
-            setVideo(response.data)
-        } catch(error) {
-            console.log(error.message)
-        }
-    }
+    const videoIdP = videoId;
+
     return ( 
     <div>
         <div>
@@ -32,7 +18,7 @@ const VideoPage = (props) => {
 
             </iframe>
         </div>
-        <DisplayRelatedVideos videoId={videoId} />
+        <DisplayRelatedVideos videoId={videoIdP}/>
     </div>
 
 
