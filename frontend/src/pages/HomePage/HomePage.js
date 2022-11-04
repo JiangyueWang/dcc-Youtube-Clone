@@ -15,7 +15,7 @@ const HomePage = () => {
 
 
   // state variable to capture all the videos fetched via Youtube API
-  const [videos, setVideos] = useState({});
+  const [videos, setVideos] = useState();
   // const [videos, setVideos] = useState(DATA);
  
   // state variable the stores user's interested topics
@@ -39,9 +39,6 @@ const HomePage = () => {
       console.log(error.message)
     }
   }
-
-  console.log('videos',videos)
-  console.log('topic',interestedTopic)
   
   return (
     <div className="container">

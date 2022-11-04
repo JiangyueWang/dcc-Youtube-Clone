@@ -2,7 +2,6 @@ import React from 'react';
 import Video from '../Video/Video';
 
 const DisplayVideos = (props) => {
-    if(props.videos.length > 1) {
     return ( 
         <div>
             {
@@ -17,8 +16,6 @@ const DisplayVideos = (props) => {
             }
         </div>
     );
-    }
-    return <div></div>
 
 }
  

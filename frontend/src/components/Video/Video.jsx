@@ -1,5 +1,6 @@
 import React from 'react';
 import ShowChannelInfo from '../ShowChannelInfo/ShowChannelInfo';
+import { Link } from 'react-router-dom';
 const Video = (props) => {
     
     return (
@@ -8,8 +9,9 @@ const Video = (props) => {
         <img src={props.item.snippet.thumbnails.medium.url} />
         <div>
             <ShowChannelInfo item={props.item} />
-            <p>{props.item.snippet.title}</p>
+            <Link to={`/${props.item.id.videoId}`}>{props.item.snippet.title}</Link>
             <p>{props.item.snippet.channelTitle}</p>
+            
 
         </div>
 
