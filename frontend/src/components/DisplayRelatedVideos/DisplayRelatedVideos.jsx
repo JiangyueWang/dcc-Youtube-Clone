@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { KEY } from '../../localKey';
-import { DATA } from '../../localData';
+
 import DisplayVideos from '../DisplayVideos/DisplayVideos';
 const DisplayRelatedVideos = (props) => {
     console.log(props.videoId)

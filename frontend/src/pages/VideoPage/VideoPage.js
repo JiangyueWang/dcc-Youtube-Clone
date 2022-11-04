@@ -1,5 +1,6 @@
 import React from 'react';
 import DisplayRelatedVideos from '../../components/DisplayRelatedVideos/DisplayRelatedVideos';
+import DisplayComments from '../../components/DisplayComments/DisplayComments';
 import { useParams } from 'react-router-dom';
 
 
@@ -18,6 +19,7 @@ const VideoPage = (props) => {
 
             </iframe>
         </div>
+        <DisplayComments videoId={videoIdP}/>
         <DisplayRelatedVideos videoId={videoIdP}/>
     </div>
 
