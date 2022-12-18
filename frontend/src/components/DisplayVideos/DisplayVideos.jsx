@@ -1,9 +1,10 @@
 import React from 'react';
 import Video from '../Video/Video';
+import "./DisplayVideo.css";
 
 const DisplayVideos = (props) => {
     return ( 
-        <div>
+        <div className='videos-wrapper'>
             {
                 props.videos.map((item) => {
                     return (

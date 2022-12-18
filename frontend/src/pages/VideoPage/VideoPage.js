@@ -5,6 +5,7 @@ import PostComment from '../../components/PostComment/PostComment';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import useAuth from "../../hooks/useAuth";
+import "./VideoPage.css"
 
 const VideoPage = (props) => {
     const { videoId } = useParams();
@@ -15,7 +16,7 @@ const VideoPage = (props) => {
     useEffect(() => {
         fetchComments();
     }, [])
-    
+
     const fetchComments = async () => {
         const getCommentsUrl = `http://127.0.0.1:8000/api/comments/${videoId}/`
         try {
@@ -41,19 +42,26 @@ const VideoPage = (props) => {
     }
 
     return ( 
-    <div>
+    <div className='video-page-wrapper'>
+        <div className='video-comment-wrapper'>
         <div>
-            <p>this is a video page for video {videoId}</p>
-            {/* <iframe id="ytplayer" 
+            <iframe id="ytplayer" 
                     type="text/html" width="640" height="360" 
                     src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
                     frameborder="0">
 
-            </iframe> */}
+            </iframe>
+            <PostComment videoId={videoIdP} postComment={postCommentFn}/>
+            {comments && <DisplayComments comments={comments}/>}
         </div>
-        <PostComment videoId={videoIdP} postComment={postCommentFn}/>
-        {comments && <DisplayComments comments={comments}/>}
-        <DisplayRelatedVideos videoId={videoIdP}/>
+
+        </div>
+        
+        
+        <div className='related-videos-wrapper'>
+            <DisplayRelatedVideos videoId={videoIdP}/>
+        </div>
+        
     </div>
 
 

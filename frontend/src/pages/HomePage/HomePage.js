@@ -6,6 +6,7 @@ import { DATA } from "../../localData";
 import axios from "axios";
 import InterestedTopicSearch from "../../components/InterestedTopicSearch/InterestedTopicSearch";
 import DisplayVideos from "../../components/DisplayVideos/DisplayVideos";
+import "./HomePage.css"
 
 const HomePage = () => {
   // The "user" value from this Hook contains the decoded logged in user information (username, first name, id)
@@ -42,9 +43,12 @@ const HomePage = () => {
   
   return (
     <div className="container">
+    <options></options>
       <h1>Home Page for {user.username}!</h1>
+      <br></br>
       <InterestedTopicSearch getTopic={getTopic}/>
-      {videos && <DisplayVideos videos={videos} />}
+      <br></br>
+      {videos && <div className="display-videos-wrapper"><DisplayVideos videos={videos} /></div>}
     </div>
   );
 };

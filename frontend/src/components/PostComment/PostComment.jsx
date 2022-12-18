@@ -15,9 +15,9 @@ const PostComment = (props) => {
     return (  
         <form onSubmit={handleSubmit}>
             <input placeholder='Add a comment' onChange={(event) => {setCommentText(event.target.value)}}></input>
+
             <button type='submit'>Comment</button>
         </form>
     );
 }
- 
 export default PostComment;

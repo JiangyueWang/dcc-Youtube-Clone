@@ -8,7 +8,10 @@ const InterestedTopicSearch = (props) => {
     return (  
     <form onSubmit={handleSubmit}>
         <label>your interested topic</label>
+        <br></br>
         <input type="text" onChange={(event) => setInteresedTopic(event.target.value)}></input>
+        <br></br>
+        <br></br>
         <button type="submit">search</button>
     </form>
     );

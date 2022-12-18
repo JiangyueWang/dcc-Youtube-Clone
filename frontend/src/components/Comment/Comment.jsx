@@ -1,12 +1,11 @@
 import React from 'react';
+import "./Comment.css"
 const Comment = (props) => {
     
     return (
-    <div>
-        <ul>
-            <li>{props.comment.user.username}</li>
-            <li>{props.comment.text}</li>
-        </ul>
+    <div className='comment-wrapper'>
+        <h3>{props.comment.user.username}</h3>
+        <p>{props.comment.text}</p>
     </div>
     );
 }

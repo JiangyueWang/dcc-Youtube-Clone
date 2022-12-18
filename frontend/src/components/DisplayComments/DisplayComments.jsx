@@ -5,7 +5,7 @@ const DisplayComments = (props) => {
 
     return (
     <div>
-        <p>comments</p>
+        <h2>Comments</h2>
         <div>
             {props.comments.map((comment)=> {
                 return (
